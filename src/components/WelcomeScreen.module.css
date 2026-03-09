@@ -1,0 +1,136 @@
+/* WelcomeScreen.module.css */
+.welcomeScreen {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;  /* Pure white background */
+  padding: 2rem;
+}
+
+.welcomeCard {
+  max-width: 550px;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);  /* Very subtle shadow */
+}
+
+.welcomeImageContainer {
+  margin-bottom: 1rem;
+}
+
+.welcomeImage {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.welcomeDivider {
+  width: 60px;
+  height: 2px;
+  background-color: #e0e0e0;  /* Light gray divider */
+  margin: 1.5rem auto;
+}
+
+.welcomeSubtitle {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.welcomeText {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcomeQuestion {
+  font-size: 1.3rem;
+  color: #333;
+  margin: 2rem 0 2.5rem;
+  font-weight: 500;
+}
+
+.welcomeButton {
+  background-color: #10b981;  /* Green color */
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);  /* Green-tinted shadow */
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.welcomeButton:hover {
+  background-color: #059669;  /* Darker green on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+.welcomeButton:active {
+  background-color: #047857;  /* Even darker green when clicked */
+  transform: translateY(0);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .welcomeCard {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+  
+  .welcomeSubtitle {
+    font-size: 1.5rem;
+  }
+  
+  .welcomeText {
+    font-size: 1rem;
+  }
+  
+  .welcomeQuestion {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 2rem;
+  }
+  
+  .welcomeButton {
+    padding: 0.9rem 2.5rem;
+    font-size: 1.2rem;
+    max-width: 220px;
+  }
+  
+  .welcomeImage {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcomeCard {
+    padding: 1.5rem 1rem;
+  }
+  
+  .welcomeSubtitle {
+    font-size: 1.3rem;
+  }
+  
+  .welcomeButton {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
+}
