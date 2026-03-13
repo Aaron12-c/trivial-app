@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import React from 'react';
+import type React from 'react';
 import welcomeImage from '../assets/image.svg';
 import styles from './WelcomeScreen.module.css';
 
@@ -8,12 +7,6 @@ interface WelcomeScreenProps {
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onBegin }) => {
-  const handleBegin = () => {
-    if (onBegin) {
-      onBegin();
-    }
-  };
-
   return (
     <div className={styles.welcomeScreen}>
       <div className={styles.welcomeCard}>
@@ -26,12 +19,23 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onBegin }) => {
         </div>
         
         <div className={styles.welcomeDivider}></div>
-        <h2 className={styles.welcomeSubtitle}>Welcome to the Trivia Challenge</h2>
+        
+        <h2 className={styles.welcomeSubtitle}>
+          Welcome to the Trivia Challenge
+        </h2>
+        
         <p className={styles.welcomeText}>
           You will be presented with 10 True or False questions
         </p>
-        <p className={styles.welcomeQuestion}>Can you score 100%?</p>
-        <button className={styles.welcomeButton} onClick={handleBegin}>
+        
+        <p className={styles.welcomeQuestion}>
+          Can you score 100%?
+        </p>
+        
+        <button 
+          className={styles.welcomeButton} 
+          onClick={onBegin}
+        >
           BEGIN
         </button>
       </div>
