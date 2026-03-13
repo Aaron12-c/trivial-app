@@ -1,6 +1,7 @@
-import styles from "./Navbar.module.css";
+import type React from 'react';
+import styles from './Navbar.module.css';
 
-export default function Navbar() {
+const Navbar: React.FC = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navContainer}>
@@ -10,4 +11,6 @@ export default function Navbar() {
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;
