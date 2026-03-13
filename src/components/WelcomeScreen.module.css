@@ -2,7 +2,7 @@
 .welcomeScreen {
   position: fixed;
   inset: 0;
-  top: 70px;  /* Adjust based on your navbar height */
+  top: 70px;  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,7 +15,7 @@
 
 .welcomeCard {
   background: white;
-  max-width: 650px;  /* Slightly increased max-width */
+  max-width: 650px;  
   width: 100%;
   text-align: center;
   margin: 0 auto;
@@ -29,13 +29,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 50px;  /* Increased from 30px to create space between image and navbar */
+  margin-bottom: 10px;  /* Reduced from 30px to bring image closer to texts */
   width: 100%;
 }
 
 .welcomeImage {
-  width: 160px;
+  width: 180px;  /* Increased from 160px */
   height: auto;
   object-fit: contain;
   display: block;
@@ -47,34 +47,34 @@
   height: 2px;
   background: #e0e0e0;
   border-radius: 1px;
-  margin: 0 auto 30px;
+  margin: 0 auto 15px;  /* Reduced from 30px */
 }
 
 .welcomeSubtitle {
-  font-size: 36px;  /* Increased from 28px */
-  font-weight: 400;  /* Maintained font weight */
+  font-size: 36px;  
+  font-weight: 400;  
   color: #1a1a1a;
-  margin-bottom: 20px;  /* Increased margin */
+  margin-bottom: 8px;  /* Reduced from 20px */
   line-height: 1.3;
-  max-width: 550px;  /* Added max-width for better readability */
+  max-width: 550px;  
 }
 
 .welcomeText {
-  font-size: 22px;  /* Increased from 18px */
-  font-weight: 400;  /* Maintained font weight */
+  font-size: 22px;  
+  font-weight: 300;  /* Changed from 400 to 300 (lighter) */
   color: #4a4a4a;
-  margin-bottom: 20px;
+  margin-bottom: 8px;  /* Reduced from 20px */
   line-height: 1.5;
-  max-width: 500px;  /* Slightly increased max-width */
+  max-width: 500px;  
   margin-left: auto;
   margin-right: auto;
 }
 
 .welcomeQuestion {
-  font-size: 28px;  /* Increased from 24px */
-  font-weight: 400;  /* Maintained font weight */
+  font-size: 28px;  
+  font-weight: 400;  
   color: #1a1a1a;
-  margin-bottom: 45px;  /* Increased margin */
+  margin-bottom: 25px;  /* Reduced from 45px */
   line-height: 1.4;
 }
 
@@ -82,15 +82,15 @@
   background: #0b8a3d;
   color: white;
   border: none;
-  padding: 10px 35px;  /* Slightly larger padding */
-  font-size: 18px;  /* Increased from 16px */
+  padding: 8px 28px;  /* Reduced from 10px 35px */
+  font-size: 15px;  /* Added font-size */
   font-weight: 500;
-  border-radius: 6px;
+  border-radius: 2px;
   cursor: pointer;
   transition: all 0.2s ease;
   letter-spacing: 1px;
   text-transform: uppercase;
-  min-width: 160px;  /* Increased min-width */
+  min-width: 140px;  /* Reduced from 160px */
   box-shadow: 0 4px 12px rgba(11, 138, 61, 0.2);
 }
 
@@ -100,27 +100,40 @@
   box-shadow: 0 8px 20px rgba(11, 138, 61, 0.3);
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for all devices */
 @media (max-width: 768px) {
-  .welcomeSubtitle {
-    font-size: 30px;  /* Adjusted for tablet */
-  }
-  
-  .welcomeText {
-    font-size: 19px;  /* Adjusted for tablet */
-  }
-  
-  .welcomeQuestion {
-    font-size: 24px;  /* Adjusted for tablet */
+  .welcomeImageContainer {
+    margin-top: 40px;  /* Adjusted for tablet */
+    margin-bottom: 8px;
   }
   
   .welcomeImage {
-    width: 150px;
+    width: 160px;  /* Adjusted for tablet */
+  }
+  
+  .welcomeSubtitle {
+    font-size: 30px;  
+    margin-bottom: 6px;
+  }
+  
+  .welcomeText {
+    font-size: 19px;  
+    margin-bottom: 6px;
+  }
+  
+  .welcomeQuestion {
+    font-size: 24px;  
+    margin-bottom: 20px;
   }
   
   .welcomeButton {
-    padding: 9px 32px;
-    font-size: 17px;
+    padding: 7px 24px;
+    font-size: 14px;
+    min-width: 130px;
+  }
+  
+  .welcomeDivider {
+    margin-bottom: 12px;
   }
 }
 
@@ -130,31 +143,48 @@
     padding: 15px;
   }
   
-  .welcomeSubtitle {
-    font-size: 26px;  /* Adjusted for mobile */
-  }
-  
-  .welcomeText {
-    font-size: 17px;  /* Adjusted for mobile */
-  }
-  
-  .welcomeQuestion {
-    font-size: 22px;  /* Adjusted for mobile */
-    margin-bottom: 35px;
+  .welcomeImageContainer {
+    margin-top: 30px;  /* Adjusted for mobile */
+    margin-bottom: 5px;
   }
   
   .welcomeImage {
-    width: 130px;
+    width: 140px;  /* Adjusted for mobile */
   }
   
-  .welcomeImageContainer {
-    margin-top: 15px;
-    margin-bottom: 20px;
+  .welcomeSubtitle {
+    font-size: 26px; 
+    margin-bottom: 5px;
+  }
+  
+  .welcomeText {
+    font-size: 17px; 
+    margin-bottom: 5px;
+  }
+  
+  .welcomeQuestion {
+    font-size: 22px;  
+    margin-bottom: 18px;
   }
   
   .welcomeButton {
-    padding: 8px 28px;
-    font-size: 16px;
-    min-width: 140px;
+    padding: 6px 20px;
+    font-size: 13px;
+    min-width: 120px;
+  }
+  
+  .welcomeDivider {
+    margin-bottom: 10px;
+  }
+}
+
+/* For larger screens */
+@media (min-width: 1200px) {
+  .welcomeImageContainer {
+    margin-top: 60px;  /* More space on larger screens */
+  }
+  
+  .welcomeImage {
+    width: 200px;  /* Slightly larger on big screens */
   }
 }
