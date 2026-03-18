@@ -1,6 +1,5 @@
 import Navbar from './components/Navbar';
 import WelcomeScreen from './components/WelcomeScreen';
-
 function App() {
   const handleBegin = () => {
     

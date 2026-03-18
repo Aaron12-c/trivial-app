@@ -13,6 +13,12 @@
   box-sizing: border-box;
 }
 
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 /* ===== LOGO STYLES ===== */
 .logo {
   font-size: 40px;  
