@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
   pull_request:
 
 jobs:
@@ -11,8 +11,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]  # Use only LTS version for stability
-      fail-fast: false  # Don't cancel all jobs if one fails
+        node-version: [22.x] # Use only LTS version for stability
+      fail-fast: false # Don't cancel all jobs if one fails
 
     steps:
       - name: 📦 Checkout repository
@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
 
       # Fix for Node.js 20 actions deprecation warning
       - name: 🔧 Configure Node.js environment
