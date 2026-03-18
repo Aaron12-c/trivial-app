@@ -1,15 +1,15 @@
 /* Navbar */
 .navbar {
   width: 100%;
-  padding: 20px 1px; 
-  background: white;  
-  border-bottom: 1px solid #eaeaea; 
+  padding: 20px 1px;
+  background: white;
+  border-bottom: 1px solid #eaeaea;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 2000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);  
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
   box-sizing: border-box;
 }
 
@@ -21,36 +21,34 @@
 
 /* ===== LOGO STYLES ===== */
 .logo {
-  font-size: 40px;  
-  font-weight: 300;  
-  color: #1a1a1a;  
+  font-size: 40px;
+  font-weight: 300;
+  color: #1a1a1a;
   text-align: left;
   display: inline-block;
-  text-decoration: none; 
+  text-decoration: none;
   margin-left: 0;
-  padding-left: 0; 
- 
+  padding-left: 0;
 }
-
 
 /* Responsive adjustments for TABLET */
 @media (max-width: 768px) {
   .navbar {
-    padding: 15px 20px; 
+    padding: 15px 20px;
   }
-  
+
   .logo {
-    font-size: 24px; 
+    font-size: 24px;
   }
 }
 
 /* Responsive adjustments for MOBILE */
 @media (max-width: 480px) {
   .navbar {
-    padding: 12px 15px; 
+    padding: 12px 15px;
   }
-  
+
   .logo {
-    font-size: 22px;  
+    font-size: 22px;
   }
 }
