@@ -1,0 +1,177 @@
+.welcomeScreen {
+  position: fixed;
+  inset: 0;
+  top: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 20px;
+  z-index: 1000;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.welcomeCard {
+  background: white;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcomeImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.welcomeImage {
+  width: 200px;
+  height: 300px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.welcomeDivider {
+  width: 50px;
+  height: 2px;
+  background: #e0e0e0;
+  border-radius: 1px;
+  margin: 0 auto 25px;
+}
+
+.welcomeSubtitle {
+  font-size: 32px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.welcomeText {
+  font-size: 20px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcomeQuestion {
+  font-size: 24px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
+
+.welcomeButton {
+  background: #0b8a3d;
+  color: white;
+  border: none;
+  padding: 10px 40px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  min-width: 150px;
+  box-shadow: 0 4px 8px rgba(11, 138, 61, 0.2);
+}
+
+.welcomeButton:hover {
+  background: #066b2f;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(11, 138, 61, 0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .welcomeImageContainer {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .welcomeImage {
+    width: 130px;
+  }
+
+  .welcomeSubtitle {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .welcomeText {
+    font-size: 17px;
+    margin-bottom: 12px;
+    max-width: 350px;
+  }
+
+  .welcomeQuestion {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .welcomeButton {
+    padding: 9px 35px;
+    font-size: 15px;
+    min-width: 140px;
+  }
+
+  .welcomeDivider {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcomeScreen {
+    top: 60px;
+    padding: 15px;
+  }
+
+  .welcomeImageContainer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .welcomeImage {
+    width: 120px;
+  }
+
+  .welcomeSubtitle {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .welcomeText {
+    font-size: 16px;
+    margin-bottom: 10px;
+    max-width: 300px;
+  }
+
+  .welcomeQuestion {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .welcomeButton {
+    padding: 8px 30px;
+    font-size: 14px;
+    min-width: 130px;
+  }
+
+  .welcomeDivider {
+    width: 40px;
+    margin-bottom: 18px;
+  }
+}
