@@ -1,0 +1,274 @@
+/* Quiz Main Container */
+.quizMain {
+  max-width: 900px;
+  width: 40%;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  margin: 80px auto 40px;
+  padding: 0 20px;
+  min-height: 100vh;
+}
+
+/* Question Text */
+.quizQuestion {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.4;
+  color: #1a1a1a;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Quiz Container */
+.quizContainer {
+  background: white;
+  border-radius: 16px;
+  padding: 120px;
+  text-align: center;
+  width: 90%;
+}
+
+/* Progress Indicator */
+.progressIndicator {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0c0c0c;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+}
+
+.categoryBracket {
+  color: #090909;
+}
+
+/* Question Container */
+.questionContainer {
+  margin-bottom: 40px;
+}
+
+.quizQuestion {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Answers Container */
+.answersContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+/* Answer Buttons */
+.answerBtn {
+  padding: 12px 30px;
+  font-size: 18px;
+  font-weight: 500;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1a1a1a;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.btnIcon {
+  font-size: 18px;
+}
+
+/* True Button */
+.trueBtn:hover {
+  border-color: #4caf50;
+  background: #f0f9f0;
+}
+
+.trueBtn.selected {
+  background: #4caf50;
+  border-color: #4caf50;
+  color: white;
+}
+
+.trueBtn.selected .btnIcon {
+  color: white;
+}
+
+/* False Button */
+.falseBtn:hover {
+  border-color: #f44336;
+  background: #fff0f0;
+}
+
+.falseBtn.selected {
+  background: #f44336;
+  border-color: #f44336;
+  color: white;
+}
+
+.falseBtn.selected .btnIcon {
+  color: white;
+}
+
+/* Validation Message */
+.validationMessage {
+  color: #f44336;
+  font-size: 14px;
+  margin: -20px 0 20px;
+  text-align: center;
+}
+
+/* Continue Button Section */
+.continueSection {
+  text-align: center;
+}
+
+.continueBtn {
+  background: #0b8a3d;
+  color: white;
+  border: none;
+  padding: 12px 35px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: 0.5px;
+}
+
+.continueBtn:hover {
+  background: #066b2f;
+  transform: translateY(-2px);
+}
+
+.arrowCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid white;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.arrowIcon {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.2s;
+}
+
+/* Arrow stays visible on hover */
+.continueBtn:hover .arrowCircle {
+  border-color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .quizMain {
+    margin: 70px auto 30px;
+    padding: 0 16px;
+  }
+
+  .quizContainer {
+    padding: 20px;
+  }
+
+  .quizQuestion {
+    font-size: 20px;
+  }
+
+  .answersContainer {
+    gap: 15px;
+  }
+
+  .answerBtn {
+    padding: 10px 24px;
+    font-size: 16px;
+    min-width: 110px;
+  }
+
+  .btnIcon {
+    font-size: 16px;
+  }
+
+  .continueBtn {
+    padding: 10px 30px;
+    font-size: 14px;
+  }
+
+  .arrowCircle {
+    width: 24px;
+    height: 24px;
+  }
+
+  .arrowIcon {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quizMain {
+    margin: 60px auto 20px;
+    padding: 0 12px;
+  }
+
+  .quizContainer {
+    padding: 20px 15px;
+  }
+
+  .progressIndicator {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .quizQuestion {
+    font-size: 18px;
+  }
+
+  .answersContainer {
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .answerBtn {
+    padding: 8px 20px;
+    font-size: 14px;
+    min-width: 100px;
+  }
+
+  .btnIcon {
+    font-size: 14px;
+  }
+
+  .validationMessage {
+    font-size: 12px;
+    margin: -15px 0 15px;
+  }
+
+  .continueBtn {
+    padding: 8px 25px;
+    font-size: 13px;
+  }
+
+  .arrowCircle {
+    width: 22px;
+    height: 22px;
+  }
+
+  .arrowIcon {
+    font-size: 11px;
+  }
+}
