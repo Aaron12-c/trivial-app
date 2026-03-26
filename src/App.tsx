@@ -3,17 +3,7 @@ import Navbar from './components/Navbar';
 import WelcomeScreen from './components/WelcomeScreen';
 import QuestionCard from './components/QuestionCard';
 import { fetchQuestions } from './data/Question';
-
-interface Question {
-  id: number;
-  type: string;
-  difficulty: string;
-  category: string;
-  question: string;
-  correctAnswer: string;
-  incorrectAnswers: string[];
-  allAnswers: string[];
-}
+import type { Question } from './data/Question'; // Import Question type from shared file
 
 function App() {
   const [quizStarted, setQuizStarted] = useState<boolean>(false);
@@ -60,12 +50,30 @@ function App() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  // Inline styles for loading and error containers
+  const containerStyle = {
+    textAlign: 'center' as const,
+    padding: '40px',
+  };
+
+  const buttonStyle = {
+    marginTop: '20px',
+    padding: '10px 20px',
+    cursor: 'pointer' as const,
+  };
+
+  const mainStyle = {
+    maxWidth: '800px',
+    margin: '0 auto',
+    padding: '20px',
+  };
+
   if (loading) {
     return (
       <div>
         <Navbar />
-        <main className="quizMain">
-          <div className="loading-container">
+        <main style={mainStyle}>
+          <div style={containerStyle}>
             <h2>Loading questions...</h2>
           </div>
         </main>
@@ -77,11 +85,13 @@ function App() {
     return (
       <div>
         <Navbar />
-        <main className="quizMain">
-          <div className="error-container">
+        <main style={mainStyle}>
+          <div style={containerStyle}>
             <h2>Error</h2>
             <p>{error}</p>
-            <button onClick={handleBegin}>Try Again</button>
+            <button onClick={handleBegin} style={buttonStyle}>
+              Try Again
+            </button>
           </div>
         </main>
       </div>
@@ -91,7 +101,7 @@ function App() {
   return (
     <div>
       <Navbar />
-      <main className="quizMain">
+      <main style={mainStyle}>
         {!quizStarted ? (
           <WelcomeScreen onBegin={handleBegin} />
         ) : questions.length > 0 && currentQuestion ? (

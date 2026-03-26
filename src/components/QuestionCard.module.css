@@ -9,8 +9,9 @@
   padding: 0 20px;
   min-height: 100vh;
 }
+
 /* Question Text */
-.quizquestion {
+.quizQuestion {
   font-weight: 700;
   font-size: 22px;
   line-height: 1.4;

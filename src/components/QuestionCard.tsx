@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useState } from 'react';
 import styles from './QuestionCard.module.css';
+import { decodeHtml, formatCategory } from '../data/Question';
 
 interface QuestionCardProps {
   question: string;
@@ -25,18 +26,6 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
 }) => {
   const [showValidation, setShowValidation] = useState<boolean>(false);
 
-  const decodeHtml = (html: string): string => {
-    const txt = document.createElement('textarea');
-    txt.innerHTML = html;
-    return txt.value;
-  };
-
-  const cleanCategory = (cat: string): string => {
-    return cat
-      .replace(/^(Entertainment:|Science:|History:|Mythology:|Celebrities:|General Knowledge:)/, '')
-      .trim();
-  };
-
   const handleContinueClick = (): void => {
     if (!selectedAnswer) {
       setShowValidation(true);
@@ -55,7 +44,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
     <div className={styles.quizContainer}>
       <div className={styles.progressIndicator}>
         {currentNumber}/{totalQuestions}{' '}
-        <span className={styles.categoryBracket}>({cleanCategory(category)})</span>
+        <span className={styles.categoryBracket}>({formatCategory(category)})</span>
       </div>
 
       <div className={styles.questionContainer}>
@@ -66,12 +55,14 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
         <button
           className={`${styles.answerBtn} ${styles.trueBtn} ${selectedAnswer === 'True' ? styles.selected : ''}`}
           onClick={() => handleAnswerClick('True')}
+          aria-pressed={selectedAnswer === 'True'}
         >
           <span className={styles.btnIcon}>✔</span> True
         </button>
         <button
           className={`${styles.answerBtn} ${styles.falseBtn} ${selectedAnswer === 'False' ? styles.selected : ''}`}
           onClick={() => handleAnswerClick('False')}
+          aria-pressed={selectedAnswer === 'False'}
         >
           <span className={styles.btnIcon}>✕</span> False
         </button>
