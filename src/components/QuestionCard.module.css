@@ -11,13 +11,14 @@
 }
 
 /* Question Text */
-.quizQuestion {
+.quizquestion {
   font-weight: 700;
   font-size: 22px;
   line-height: 1.4;
   color: #1a1a1a;
   margin: 0 auto;
   padding: 0 15px;
+  text-align: center;
 }
 
 /* Quiz Container */
