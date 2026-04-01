@@ -18,7 +18,11 @@ function App() {
     const savedQuiz = localStorage.getItem('quizState');
     if (savedQuiz) {
       try {
-        const { questions: savedQuestions, userAnswers: savedAnswers, currentQuestionIndex: savedIndex } = JSON.parse(savedQuiz);
+        const {
+          questions: savedQuestions,
+          userAnswers: savedAnswers,
+          currentQuestionIndex: savedIndex,
+        } = JSON.parse(savedQuiz);
         if (savedQuestions && savedQuestions.length > 0) {
           setQuestions(savedQuestions);
           setUserAnswers(savedAnswers);
@@ -34,11 +38,14 @@ function App() {
   // Save quiz state to localStorage whenever it changes
   useEffect(() => {
     if (quizStarted && questions.length > 0) {
-      localStorage.setItem('quizState', JSON.stringify({
-        questions,
-        userAnswers,
-        currentQuestionIndex
-      }));
+      localStorage.setItem(
+        'quizState',
+        JSON.stringify({
+          questions,
+          userAnswers,
+          currentQuestionIndex,
+        })
+      );
     }
   }, [quizStarted, questions, userAnswers, currentQuestionIndex]);
 
@@ -48,7 +55,7 @@ function App() {
       if (quizStarted) {
         if (currentQuestionIndex > 0) {
           // Go to previous question
-          setCurrentQuestionIndex(prev => prev - 1);
+          setCurrentQuestionIndex((prev) => prev - 1);
         } else if (currentQuestionIndex === 0) {
           // On first question, going back returns to welcome screen
           setQuizStarted(false);
@@ -61,7 +68,7 @@ function App() {
     };
 
     window.addEventListener('popstate', handlePopState);
-    
+
     // Push initial state to history so back button works
     if (quizStarted) {
       window.history.pushState(null, '');
@@ -79,12 +86,12 @@ function App() {
         // Left arrow key - go back
         if (e.key === 'ArrowLeft') {
           if (currentQuestionIndex > 0) {
-            setCurrentQuestionIndex(prev => prev - 1);
+            setCurrentQuestionIndex((prev) => prev - 1);
           }
         }
         // Right arrow key - go forward (continue)
         if (e.key === 'ArrowRight' && currentQuestionIndex + 1 < questions.length) {
-          setCurrentQuestionIndex(prev => prev + 1);
+          setCurrentQuestionIndex((prev) => prev + 1);
           window.history.pushState(null, '');
         }
         // Escape key - exit quiz and return to welcome screen
@@ -106,7 +113,7 @@ function App() {
 
   const handleBegin = async () => {
     setError(null);
-    
+
     try {
       console.log('Starting to fetch questions...');
       const fetchedQuestions = await fetchQuestions();
@@ -118,13 +125,16 @@ function App() {
         setUserAnswers(initialAnswers);
         setCurrentQuestionIndex(0);
         setQuizStarted(true);
-        
+
         // Save to localStorage
-        localStorage.setItem('quizState', JSON.stringify({
-          questions: fetchedQuestions,
-          userAnswers: initialAnswers,
-          currentQuestionIndex: 0
-        }));
+        localStorage.setItem(
+          'quizState',
+          JSON.stringify({
+            questions: fetchedQuestions,
+            userAnswers: initialAnswers,
+            currentQuestionIndex: 0,
+          })
+        );
 
         // Push to history for back button support
         window.history.pushState(null, '');
@@ -133,7 +143,7 @@ function App() {
       }
     } catch (err) {
       console.error('Failed to fetch questions - Full error:', err);
-      
+
       // Provide more specific error messages
       if (err instanceof Error) {
         if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
