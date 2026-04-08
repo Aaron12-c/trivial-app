@@ -3,41 +3,51 @@ import './index.css';
 import Navbar from './components/Navbar';
 import WelcomeScreen from './components/WelcomeScreen';
 import QuestionCard from './components/QuestionCard';
+import ResultScreen from './components/ResultScreen';
 import { fetchQuestions } from './data/Question';
 import type { Question } from './data/Question';
 
+interface Result {
+  question: string;
+  userAnswer: string;
+  correctAnswer: string;
+  isCorrect: boolean;
+}
+
 function App() {
   const [quizStarted, setQuizStarted] = useState<boolean>(false);
+  const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [results, setResults] = useState<Result[]>([]);
 
-  // Load saved quiz state from localStorage on app start
-  useEffect(() => {
-    const savedQuiz = localStorage.getItem('quizState');
-    if (savedQuiz) {
-      try {
-        const {
-          questions: savedQuestions,
-          userAnswers: savedAnswers,
-          currentQuestionIndex: savedIndex,
-        } = JSON.parse(savedQuiz);
-        if (savedQuestions && savedQuestions.length > 0) {
-          setQuestions(savedQuestions);
-          setUserAnswers(savedAnswers);
-          setCurrentQuestionIndex(savedIndex);
-          setQuizStarted(true);
-        }
-      } catch (err) {
-        console.error('Failed to load saved quiz:', err);
-      }
-    }
-  }, []);
+  // REMOVED: This was loading saved quiz and showing questions page instead of welcome
+  // useEffect(() => {
+  //   const savedQuiz = localStorage.getItem('quizState');
+  //   if (savedQuiz) {
+  //     try {
+  //       const {
+  //         questions: savedQuestions,
+  //         userAnswers: savedAnswers,
+  //         currentQuestionIndex: savedIndex,
+  //       } = JSON.parse(savedQuiz);
+  //       if (savedQuestions && savedQuestions.length > 0) {
+  //         setQuestions(savedQuestions);
+  //         setUserAnswers(savedAnswers);
+  //         setCurrentQuestionIndex(savedIndex);
+  //         setQuizStarted(true);
+  //       }
+  //     } catch (err) {
+  //       console.error('Failed to load saved quiz:', err);
+  //     }
+  //   }
+  // }, []);
 
   // Save quiz state to localStorage whenever it changes
   useEffect(() => {
-    if (quizStarted && questions.length > 0) {
+    if (quizStarted && !quizCompleted && questions.length > 0) {
       localStorage.setItem(
         'quizState',
         JSON.stringify({
@@ -47,18 +57,17 @@ function App() {
         })
       );
     }
-  }, [quizStarted, questions, userAnswers, currentQuestionIndex]);
+  }, [quizStarted, quizCompleted, questions, userAnswers, currentQuestionIndex]);
 
   // Handle browser back button - can go back to welcome page
   useEffect(() => {
     const handlePopState = () => {
-      if (quizStarted) {
+      if (quizStarted && !quizCompleted) {
         if (currentQuestionIndex > 0) {
-          // Go to previous question
           setCurrentQuestionIndex((prev) => prev - 1);
         } else if (currentQuestionIndex === 0) {
-          // On first question, going back returns to welcome screen
           setQuizStarted(false);
+          setQuizCompleted(false);
           setQuestions([]);
           setUserAnswers([]);
           setCurrentQuestionIndex(0);
@@ -69,34 +78,31 @@ function App() {
 
     window.addEventListener('popstate', handlePopState);
 
-    // Push initial state to history so back button works
-    if (quizStarted) {
+    if (quizStarted && !quizCompleted) {
       window.history.pushState(null, '');
     }
 
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [quizStarted, currentQuestionIndex]);
+  }, [quizStarted, quizCompleted, currentQuestionIndex]);
 
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (quizStarted) {
-        // Left arrow key - go back
+      if (quizStarted && !quizCompleted) {
         if (e.key === 'ArrowLeft') {
           if (currentQuestionIndex > 0) {
             setCurrentQuestionIndex((prev) => prev - 1);
           }
         }
-        // Right arrow key - go forward (continue)
         if (e.key === 'ArrowRight' && currentQuestionIndex + 1 < questions.length) {
           setCurrentQuestionIndex((prev) => prev + 1);
           window.history.pushState(null, '');
         }
-        // Escape key - exit quiz and return to welcome screen
         if (e.key === 'Escape') {
           setQuizStarted(false);
+          setQuizCompleted(false);
           setQuestions([]);
           setUserAnswers([]);
           setCurrentQuestionIndex(0);
@@ -109,10 +115,20 @@ function App() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [quizStarted, currentQuestionIndex, questions.length]);
+  }, [quizStarted, quizCompleted, currentQuestionIndex, questions.length]);
+
+  const calculateResults = (): Result[] => {
+    return questions.map((question, index) => ({
+      question: question.question,
+      userAnswer: userAnswers[index] || 'Not answered',
+      correctAnswer: question.correctAnswer,
+      isCorrect: userAnswers[index] === question.correctAnswer,
+    }));
+  };
 
   const handleBegin = async () => {
     setError(null);
+    setQuizCompleted(false);
 
     try {
       console.log('Starting to fetch questions...');
@@ -126,7 +142,6 @@ function App() {
         setCurrentQuestionIndex(0);
         setQuizStarted(true);
 
-        // Save to localStorage
         localStorage.setItem(
           'quizState',
           JSON.stringify({
@@ -136,7 +151,6 @@ function App() {
           })
         );
 
-        // Push to history for back button support
         window.history.pushState(null, '');
       } else {
         setError('No questions available. Please try again.');
@@ -144,7 +158,6 @@ function App() {
     } catch (err) {
       console.error('Failed to fetch questions - Full error:', err);
 
-      // Provide more specific error messages
       if (err instanceof Error) {
         if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
           setError('Network error: Please check your internet connection and try again.');
@@ -172,13 +185,30 @@ function App() {
   const handleContinue = () => {
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      // Push to history for back button support when moving forward
       window.history.pushState(null, '');
     } else {
-      // Quiz completed - clear saved state
+      const quizResults = calculateResults();
+      setResults(quizResults);
+      setQuizCompleted(true);
+      setQuizStarted(false);
       localStorage.removeItem('quizState');
-      alert('Quiz completed! Check console for answers.');
+      
+      console.log('Quiz completed! Results:', quizResults);
+      console.log('Score:', quizResults.filter(r => r.isCorrect).length, '/', questions.length);
     }
+  };
+
+  const handlePlayAgain = () => {
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    setQuestions([]);
+    setUserAnswers([]);
+    setCurrentQuestionIndex(0);
+    setResults([]);
+    setError(null);
+    localStorage.removeItem('quizState');
+    
+    handleBegin();
   };
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -196,6 +226,21 @@ function App() {
             </button>
           </div>
         </main>
+      </div>
+    );
+  }
+
+  if (quizCompleted && results.length > 0) {
+    const score = results.filter(r => r.isCorrect).length;
+    return (
+      <div>
+        <Navbar />
+        <ResultScreen
+          score={score}
+          totalQuestions={questions.length}
+          results={results}
+          onPlayAgain={handlePlayAgain}
+        />
       </div>
     );
   }
