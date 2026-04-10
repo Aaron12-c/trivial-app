@@ -192,9 +192,9 @@ function App() {
       setQuizCompleted(true);
       setQuizStarted(false);
       localStorage.removeItem('quizState');
-      
+
       console.log('Quiz completed! Results:', quizResults);
-      console.log('Score:', quizResults.filter(r => r.isCorrect).length, '/', questions.length);
+      console.log('Score:', quizResults.filter((r) => r.isCorrect).length, '/', questions.length);
     }
   };
 
@@ -207,7 +207,7 @@ function App() {
     setResults([]);
     setError(null);
     localStorage.removeItem('quizState');
-    
+
     handleBegin();
   };
 
@@ -231,7 +231,7 @@ function App() {
   }
 
   if (quizCompleted && results.length > 0) {
-    const score = results.filter(r => r.isCorrect).length;
+    const score = results.filter((r) => r.isCorrect).length;
     return (
       <div>
         <Navbar />

@@ -39,23 +39,23 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
 
         <div className={styles.answersList}>
           {results.map((result, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`${styles.answerItem} ${result.isCorrect ? styles.correct : styles.incorrect}`}
             >
-              <p className={styles.answerQuestion}>
-                {decodeHtml(result.question)}
-              </p>
-              
+              <p className={styles.answerQuestion}>{decodeHtml(result.question)}</p>
+
               <div className={styles.answerFooter}>
-                <div className={`${styles.answerText} ${result.isCorrect ? styles.correct : styles.incorrect}`}>
-                  <span className={styles.answerEmoji}>
-                    {result.isCorrect ? '✅' : '❌'}
-                  </span>
+                <div
+                  className={`${styles.answerText} ${result.isCorrect ? styles.correct : styles.incorrect}`}
+                >
+                  <span className={styles.answerEmoji}>{result.isCorrect ? '✅' : '❌'}</span>
                   Your Answer: {result.userAnswer || 'Not answered'}
                 </div>
-                
-                <div className={`${styles.answerStatus} ${result.isCorrect ? styles.statusCorrect : styles.statusIncorrect}`}>
+
+                <div
+                  className={`${styles.answerStatus} ${result.isCorrect ? styles.statusCorrect : styles.statusIncorrect}`}
+                >
                   {result.isCorrect ? '✓ Correct' : '✗ Incorrect'}
                 </div>
               </div>
