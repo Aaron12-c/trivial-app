@@ -177,32 +177,10 @@ function App() {
     } else {
       // Quiz completed - clear saved state
       localStorage.removeItem('quizState');
-<<<<<<< HEAD
-
-      console.log('Quiz completed! Results:', quizResults);
-      console.log('Score:', quizResults.filter((r) => r.isCorrect).length, '/', questions.length);
-    }
-  };
-
-  const handlePlayAgain = () => {
-    setQuizStarted(false);
-    setQuizCompleted(false);
-    setQuestions([]);
-    setUserAnswers([]);
-    setCurrentQuestionIndex(0);
-    setResults([]);
-    setError(null);
-    localStorage.removeItem('quizState');
-
-    handleBegin();
-  };
-
-=======
       alert('Quiz completed! Check console for answers.');
     }
   };
 
->>>>>>> f994b1ef40d6c3fd29ae3bf7534b4946a7628997
   const currentQuestion = questions[currentQuestionIndex];
 
   if (error) {
@@ -222,24 +200,6 @@ function App() {
     );
   }
 
-<<<<<<< HEAD
-  if (quizCompleted && results.length > 0) {
-    const score = results.filter((r) => r.isCorrect).length;
-    return (
-      <div>
-        <Navbar />
-        <ResultScreen
-          score={score}
-          totalQuestions={questions.length}
-          results={results}
-          onPlayAgain={handlePlayAgain}
-        />
-      </div>
-    );
-  }
-
-=======
->>>>>>> f994b1ef40d6c3fd29ae3bf7534b4946a7628997
   return (
     <div>
       <Navbar />

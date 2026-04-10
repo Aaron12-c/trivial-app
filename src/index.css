@@ -47,29 +47,3 @@ body {
 .quizMain {
   width: 100%;
 }
-<<<<<<< HEAD
-
-/* Responsive adjustments - updated without the green line */
-@media (max-width: 768px) {
-  .app-main {
-    padding: 80px 16px 30px;
-  }
-
-  .loading-container,
-  .error-container {
-    padding: 30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-main {
-    padding: 70px 12px 20px;
-  }
-
-  .loading-container,
-  .error-container {
-    padding: 20px;
-  }
-}
-=======
->>>>>>> f994b1ef40d6c3fd29ae3bf7534b4946a7628997
