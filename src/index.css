@@ -10,26 +10,12 @@ body {
 .app-main {
   max-width: 800px;
   margin: 0 auto;
-  padding: 100px 20px 40px;
-  min-height: 100vh;
+  padding: 20px;
+  min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
-/* REMOVED - This was creating the green line */
-/* body::before {
-  content: '';
-  position: fixed;
-  top: 80px;
-  left: 0;
-  bottom: 0;
-  width: 5px;
-  background: linear-gradient(180deg, #10b981 0%, #059669 50%, #10b981 100%);
-  z-index: 100;
-  border-radius: 0 4px 4px 0;
-  box-shadow: 2px 0 8px rgba(16, 185, 129, 0.15);
-} */
 
 .loading-container,
 .error-container {
@@ -39,9 +25,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .error-container button {
@@ -63,27 +46,4 @@ body {
 
 .quizMain {
   width: 100%;
-}
-
-/* Responsive adjustments - updated without the green line */
-@media (max-width: 768px) {
-  .app-main {
-    padding: 80px 16px 30px;
-  }
-  
-  .loading-container,
-  .error-container {
-    padding: 30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-main {
-    padding: 70px 12px 20px;
-  }
-  
-  .loading-container,
-  .error-container {
-    padding: 20px;
-  }
 }
