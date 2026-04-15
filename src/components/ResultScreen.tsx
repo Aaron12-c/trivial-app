@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
-import { decodeHtml } from '../data/Question';
-import styles from './ResultScreen.module.css';
-
-interface Result {
-  question: string;
-  userAnswer: string;
-  correctAnswer: string;
-  isCorrect: boolean;
-}
+import type React from 'react';
+import styles from './ResultScreen.module.css';  // ← ADD THIS IMPORT
 
 interface ResultScreenProps {
   score: number;
   totalQuestions: number;
-  results: Result[];
+  results: Array<{
+    question: string;
+    userAnswer: string;
+    isCorrect: boolean;
+  }>;
   onPlayAgain: () => void;
 }
 
@@ -22,7 +18,14 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
   results,
   onPlayAgain,
 }) => {
+  // Calculate percentage (now it's being used in the JSX below)
   const percentage = Math.round((score / totalQuestions) * 100);
+
+  const decodeHtml = (html: string) => {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
+  };
 
   return (
     <div className={styles.resultScreen}>
@@ -31,10 +34,15 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
           <h1 className={styles.resultTitle}>You Scored</h1>
         </div>
 
+        {/* Percentage is now being used - fixes the unused variable warning */}
+        <div className={styles.percentageContainer}>
+          <p className={styles.percentageText}>{percentage}% Correct</p>
+        </div>
+
         <div className={styles.scoreDisplay}>
           <span className={styles.scoreNumber}>{score}</span>
           <span className={styles.scoreTotal}>/{totalQuestions}</span>
-          <span className={styles.scoreEmoji}>🏅</span>
+          <span className={styles.scoreEmoji} aria-hidden="true">🏅</span>
         </div>
 
         <div className={styles.answersList}>
@@ -49,7 +57,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
                 <div
                   className={`${styles.answerText} ${result.isCorrect ? styles.correct : styles.incorrect}`}
                 >
-                  <span className={styles.answerEmoji}>{result.isCorrect ? '✅' : '❌'}</span>
+                  <span className={styles.answerEmoji} aria-hidden="true">
+                    {result.isCorrect ? '✅' : '❌'}
+                  </span>
                   Your Answer: {result.userAnswer || 'Not answered'}
                 </div>
 
@@ -64,7 +74,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
         </div>
 
         <button className={styles.playAgainBtn} onClick={onPlayAgain}>
-          <span className={styles.restartIcon}>↻</span>
+          <span className={styles.restartIcon} aria-hidden="true">↻</span>
           TRY AGAIN
         </button>
       </div>
