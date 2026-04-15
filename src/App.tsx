@@ -207,7 +207,7 @@ function App() {
     return questions.map((question, index) => {
       const userAnswer = userAnswers[index];
       const isCorrect = userAnswer === question.correctAnswer;
-      
+
       return {
         question: question.question,
         userAnswer: userAnswer || '',
@@ -217,9 +217,8 @@ function App() {
   };
 
   const calculateScore = (): number => {
-    return questions.filter((question, index) => 
-      userAnswers[index] === question.correctAnswer
-    ).length;
+    return questions.filter((question, index) => userAnswers[index] === question.correctAnswer)
+      .length;
   };
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -246,7 +245,7 @@ function App() {
   if (quizCompleted && questions.length > 0) {
     const results = calculateResults();
     const score = calculateScore();
-    
+
     return (
       <div>
         <Navbar />

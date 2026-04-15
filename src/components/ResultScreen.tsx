@@ -1,5 +1,5 @@
 import type React from 'react';
-import styles from './ResultScreen.module.css';  // ← ADD THIS IMPORT
+import styles from './ResultScreen.module.css'; // ← ADD THIS IMPORT
 
 interface ResultScreenProps {
   score: number;
@@ -42,7 +42,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
         <div className={styles.scoreDisplay}>
           <span className={styles.scoreNumber}>{score}</span>
           <span className={styles.scoreTotal}>/{totalQuestions}</span>
-          <span className={styles.scoreEmoji} aria-hidden="true">🏅</span>
+          <span className={styles.scoreEmoji} aria-hidden="true">
+            🏅
+          </span>
         </div>
 
         <div className={styles.answersList}>
@@ -74,7 +76,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
         </div>
 
         <button className={styles.playAgainBtn} onClick={onPlayAgain}>
-          <span className={styles.restartIcon} aria-hidden="true">↻</span>
+          <span className={styles.restartIcon} aria-hidden="true">
+            ↻
+          </span>
           TRY AGAIN
         </button>
       </div>
