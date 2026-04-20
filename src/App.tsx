@@ -3,7 +3,7 @@ import './index.css';
 import Navbar from './components/Navbar';
 import WelcomeScreen from './components/WelcomeScreen';
 import QuestionCard from './components/QuestionCard';
-import ResultScreen from './components/ResultScreen'; // ADD THIS IMPORT
+import ResultScreen from './components/ResultScreen';
 import { fetchQuestions } from './data/Question';
 import type { Question } from './data/Question';
 
@@ -15,13 +15,13 @@ interface QuizResult {
 
 function App() {
   const [quizStarted, setQuizStarted] = useState<boolean>(false);
-  const [quizCompleted, setQuizCompleted] = useState<boolean>(false); // ADD THIS
+  const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Load saved quiz state from localStorage on app start
+  
   useEffect(() => {
     const savedQuiz = localStorage.getItem('quizState');
     if (savedQuiz) {
@@ -36,7 +36,7 @@ function App() {
           setUserAnswers(savedAnswers);
           setCurrentQuestionIndex(savedIndex);
           setQuizStarted(true);
-          setQuizCompleted(false); // Ensure quiz is not marked as completed
+          setQuizCompleted(false);
         }
       } catch (err) {
         console.error('Failed to load saved quiz:', err);
@@ -44,7 +44,7 @@ function App() {
     }
   }, []);
 
-  // Save quiz state to localStorage whenever it changes
+  
   useEffect(() => {
     if (quizStarted && !quizCompleted && questions.length > 0) {
       localStorage.setItem(
@@ -58,7 +58,6 @@ function App() {
     }
   }, [quizStarted, quizCompleted, questions, userAnswers, currentQuestionIndex]);
 
-  // Handle browser back button - can go back to welcome page
   useEffect(() => {
     const handlePopState = () => {
       if (quizStarted && !quizCompleted) {
@@ -66,7 +65,7 @@ function App() {
           // Go to previous question
           setCurrentQuestionIndex((prev) => prev - 1);
         } else if (currentQuestionIndex === 0) {
-          // On first question, going back returns to welcome screen
+          
           resetQuiz();
         }
       }
@@ -74,7 +73,7 @@ function App() {
 
     window.addEventListener('popstate', handlePopState);
 
-    // Push initial state to history so back button works
+  
     if (quizStarted && !quizCompleted) {
       window.history.pushState(null, '');
     }
@@ -84,22 +83,22 @@ function App() {
     };
   }, [quizStarted, quizCompleted, currentQuestionIndex]);
 
-  // Handle keyboard navigation
+  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (quizStarted && !quizCompleted) {
-        // Left arrow key - go back
+        
         if (e.key === 'ArrowLeft') {
           if (currentQuestionIndex > 0) {
             setCurrentQuestionIndex((prev) => prev - 1);
           }
         }
-        // Right arrow key - go forward (continue)
+        
         if (e.key === 'ArrowRight' && currentQuestionIndex + 1 < questions.length) {
           setCurrentQuestionIndex((prev) => prev + 1);
           window.history.pushState(null, '');
         }
-        // Escape key - exit quiz and return to welcome screen
+      
         if (e.key === 'Escape') {
           resetQuiz();
         }
@@ -123,7 +122,7 @@ function App() {
 
   const handleBegin = async () => {
     setError(null);
-    setQuizCompleted(false); // Reset completed state
+    setQuizCompleted(false);
 
     try {
       console.log('Starting to fetch questions...');
@@ -137,7 +136,7 @@ function App() {
         setCurrentQuestionIndex(0);
         setQuizStarted(true);
 
-        // Save to localStorage
+      
         localStorage.setItem(
           'quizState',
           JSON.stringify({
@@ -147,7 +146,7 @@ function App() {
           })
         );
 
-        // Push to history for back button support
+      
         window.history.pushState(null, '');
       } else {
         setError('No questions available. Please try again.');
@@ -155,7 +154,7 @@ function App() {
     } catch (err) {
       console.error('Failed to fetch questions - Full error:', err);
 
-      // Provide more specific error messages
+      
       if (err instanceof Error) {
         if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
           setError('Network error: Please check your internet connection and try again.');
@@ -183,10 +182,10 @@ function App() {
   const handleContinue = () => {
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      // Push to history for back button support when moving forward
+      
       window.history.pushState(null, '');
     } else {
-      // Quiz completed - show results
+  
       handleQuizComplete();
     }
   };
@@ -197,12 +196,12 @@ function App() {
     setQuizStarted(false);
   };
 
-  const handlePlayAgain = () => {
-    resetQuiz();
-    handleBegin(); // Start a new quiz
+  
+  const handleTryAgain = () => {
+    resetQuiz(); 
   };
 
-  // Calculate results for the ResultScreen
+  
   const calculateResults = (): QuizResult[] => {
     return questions.map((question, index) => {
       const userAnswer = userAnswers[index];
@@ -223,7 +222,7 @@ function App() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  // Show error screen
+  
   if (error) {
     return (
       <div>
@@ -241,7 +240,7 @@ function App() {
     );
   }
 
-  // Show results screen
+  
   if (quizCompleted && questions.length > 0) {
     const results = calculateResults();
     const score = calculateScore();
@@ -254,14 +253,13 @@ function App() {
             score={score}
             totalQuestions={questions.length}
             results={results}
-            onPlayAgain={handlePlayAgain}
+            onPlayAgain={handleTryAgain}  // CHANGED: Now calls handleTryAgain instead of handlePlayAgain
           />
         </main>
       </div>
     );
   }
 
-  // Main app render
   return (
     <div>
       <Navbar />
