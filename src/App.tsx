@@ -21,7 +21,6 @@ function App() {
   const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  
   useEffect(() => {
     const savedQuiz = localStorage.getItem('quizState');
     if (savedQuiz) {
@@ -44,7 +43,6 @@ function App() {
     }
   }, []);
 
-  
   useEffect(() => {
     if (quizStarted && !quizCompleted && questions.length > 0) {
       localStorage.setItem(
@@ -65,7 +63,6 @@ function App() {
           // Go to previous question
           setCurrentQuestionIndex((prev) => prev - 1);
         } else if (currentQuestionIndex === 0) {
-          
           resetQuiz();
         }
       }
@@ -73,7 +70,6 @@ function App() {
 
     window.addEventListener('popstate', handlePopState);
 
-  
     if (quizStarted && !quizCompleted) {
       window.history.pushState(null, '');
     }
@@ -83,22 +79,20 @@ function App() {
     };
   }, [quizStarted, quizCompleted, currentQuestionIndex]);
 
-  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (quizStarted && !quizCompleted) {
-        
         if (e.key === 'ArrowLeft') {
           if (currentQuestionIndex > 0) {
             setCurrentQuestionIndex((prev) => prev - 1);
           }
         }
-        
+
         if (e.key === 'ArrowRight' && currentQuestionIndex + 1 < questions.length) {
           setCurrentQuestionIndex((prev) => prev + 1);
           window.history.pushState(null, '');
         }
-      
+
         if (e.key === 'Escape') {
           resetQuiz();
         }
@@ -136,7 +130,6 @@ function App() {
         setCurrentQuestionIndex(0);
         setQuizStarted(true);
 
-      
         localStorage.setItem(
           'quizState',
           JSON.stringify({
@@ -146,7 +139,6 @@ function App() {
           })
         );
 
-      
         window.history.pushState(null, '');
       } else {
         setError('No questions available. Please try again.');
@@ -154,7 +146,6 @@ function App() {
     } catch (err) {
       console.error('Failed to fetch questions - Full error:', err);
 
-      
       if (err instanceof Error) {
         if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
           setError('Network error: Please check your internet connection and try again.');
@@ -182,10 +173,9 @@ function App() {
   const handleContinue = () => {
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      
+
       window.history.pushState(null, '');
     } else {
-  
       handleQuizComplete();
     }
   };
@@ -196,12 +186,10 @@ function App() {
     setQuizStarted(false);
   };
 
-  
   const handleTryAgain = () => {
-    resetQuiz(); 
+    resetQuiz();
   };
 
-  
   const calculateResults = (): QuizResult[] => {
     return questions.map((question, index) => {
       const userAnswer = userAnswers[index];
@@ -222,7 +210,6 @@ function App() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  
   if (error) {
     return (
       <div>
@@ -240,7 +227,6 @@ function App() {
     );
   }
 
-  
   if (quizCompleted && questions.length > 0) {
     const results = calculateResults();
     const score = calculateScore();
@@ -253,7 +239,7 @@ function App() {
             score={score}
             totalQuestions={questions.length}
             results={results}
-            onPlayAgain={handleTryAgain}  // CHANGED: Now calls handleTryAgain instead of handlePlayAgain
+            onPlayAgain={handleTryAgain} // CHANGED: Now calls handleTryAgain instead of handlePlayAgain
           />
         </main>
       </div>
