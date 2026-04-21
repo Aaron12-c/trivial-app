@@ -21,28 +21,7 @@ function App() {
   const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const savedQuiz = localStorage.getItem('quizState');
-    if (savedQuiz) {
-      try {
-        const {
-          questions: savedQuestions,
-          userAnswers: savedAnswers,
-          currentQuestionIndex: savedIndex,
-        } = JSON.parse(savedQuiz);
-        if (savedQuestions && savedQuestions.length > 0) {
-          setQuestions(savedQuestions);
-          setUserAnswers(savedAnswers);
-          setCurrentQuestionIndex(savedIndex);
-          setQuizStarted(true);
-          setQuizCompleted(false);
-        }
-      } catch (err) {
-        console.error('Failed to load saved quiz:', err);
-      }
-    }
-  }, []);
-
+  // Save quiz state to localStorage whenever it changes
   useEffect(() => {
     if (quizStarted && !quizCompleted && questions.length > 0) {
       localStorage.setItem(
@@ -53,14 +32,16 @@ function App() {
           currentQuestionIndex,
         })
       );
+    } else if (!quizStarted && !quizCompleted) {
+      localStorage.removeItem('quizState');
     }
   }, [quizStarted, quizCompleted, questions, userAnswers, currentQuestionIndex]);
 
+  // Handle browser back button
   useEffect(() => {
     const handlePopState = () => {
       if (quizStarted && !quizCompleted) {
         if (currentQuestionIndex > 0) {
-          // Go to previous question
           setCurrentQuestionIndex((prev) => prev - 1);
         } else if (currentQuestionIndex === 0) {
           resetQuiz();
@@ -79,6 +60,7 @@ function App() {
     };
   }, [quizStarted, quizCompleted, currentQuestionIndex]);
 
+  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (quizStarted && !quizCompleted) {
@@ -111,6 +93,7 @@ function App() {
     setQuestions([]);
     setUserAnswers([]);
     setCurrentQuestionIndex(0);
+    setError(null);
     localStorage.removeItem('quizState');
   };
 
@@ -119,9 +102,7 @@ function App() {
     setQuizCompleted(false);
 
     try {
-      console.log('Starting to fetch questions...');
       const fetchedQuestions = await fetchQuestions();
-      console.log('Questions fetched successfully:', fetchedQuestions.length);
 
       if (fetchedQuestions && fetchedQuestions.length > 0) {
         setQuestions(fetchedQuestions);
@@ -144,19 +125,18 @@ function App() {
         setError('No questions available. Please try again.');
       }
     } catch (err) {
-      console.error('Failed to fetch questions - Full error:', err);
+      console.error('Failed to fetch questions:', err);
 
       if (err instanceof Error) {
-        if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-          setError('Network error: Please check your internet connection and try again.');
-        } else if (err.message.includes('HTTP error')) {
-          setError(`Server error: ${err.message}. Please try again later.`);
-        } else if (err.message.includes('timeout')) {
-          setError('Request timed out. Please check your connection and try again.');
-        } else if (err.message.includes('response_code')) {
-          setError('API error: Could not retrieve questions. Please try again.');
+        if (err.message.includes('429') || err.message.includes('Too Many Requests')) {
+          setError('Please wait a few seconds before starting a new quiz.');
+        } else if (
+          err.message.includes('Failed to fetch') ||
+          err.message.includes('NetworkError')
+        ) {
+          setError('Network error: Please check your internet connection.');
         } else {
-          setError(`Error: ${err.message}`);
+          setError('Failed to load questions. Please try again.');
         }
       } else {
         setError('Failed to load questions. Please try again.');
@@ -173,7 +153,6 @@ function App() {
   const handleContinue = () => {
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-
       window.history.pushState(null, '');
     } else {
       handleQuizComplete();
@@ -210,16 +189,17 @@ function App() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  // Show error screen
   if (error) {
     return (
       <div>
         <Navbar />
         <main className="app-main">
           <div className="error-container">
-            <h2>Error</h2>
+            <h2>Unable to Start Quiz</h2>
             <p>{error}</p>
-            <button onClick={handleBegin} className="retry-btn">
-              Try Again
+            <button onClick={resetQuiz} className="retry-btn">
+              Back to Home
             </button>
           </div>
         </main>
@@ -227,6 +207,7 @@ function App() {
     );
   }
 
+  // Show results screen
   if (quizCompleted && questions.length > 0) {
     const results = calculateResults();
     const score = calculateScore();
@@ -239,7 +220,7 @@ function App() {
             score={score}
             totalQuestions={questions.length}
             results={results}
-            onPlayAgain={handleTryAgain} // CHANGED: Now calls handleTryAgain instead of handlePlayAgain
+            onPlayAgain={handleTryAgain}
           />
         </main>
       </div>
@@ -263,16 +244,7 @@ function App() {
             onContinue={handleContinue}
             isLastQuestion={currentQuestionIndex === questions.length - 1}
           />
-        ) : (
-          <div className="error-container">
-            <p>Loading questions... Please wait.</p>
-            {questions.length === 0 && (
-              <button onClick={handleBegin} className="retry-btn">
-                Try Again
-              </button>
-            )}
-          </div>
-        )}
+        ) : null}
       </main>
     </div>
   );
