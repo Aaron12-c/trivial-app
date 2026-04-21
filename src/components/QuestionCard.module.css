@@ -1,8 +1,8 @@
 /* Quiz Main Container - FIXED CENTERING */
 .quizMain {
   max-width: 900px;
-  width: 90%; 
-  justify-content: center; 
+  width: 90%;
+  justify-content: center;
   align-items: center;
   display: flex;
   margin: 80px auto 40px;
@@ -21,11 +21,10 @@
   text-align: center;
 }
 
-
 .quizContainer {
   background: white;
   border-radius: 16px;
-  padding: 50px; 
+  padding: 50px;
   text-align: center;
   width: 100%;
   margin: 0 auto;
