@@ -1,8 +1,8 @@
-/* Quiz Main Container */
+/* Quiz Main Container - FIXED CENTERING */
 .quizMain {
   max-width: 900px;
-  width: 40%;
-  justify-content: flex-start;
+  width: 90%; 
+  justify-content: center; 
   align-items: center;
   display: flex;
   margin: 80px auto 40px;
@@ -21,13 +21,15 @@
   text-align: center;
 }
 
-/* Quiz Container */
+
 .quizContainer {
   background: white;
   border-radius: 16px;
-  padding: 120px;
+  padding: 50px; 
   text-align: center;
-  width: 90%;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: none;
 }
 
 /* Progress Indicator */
@@ -181,10 +183,11 @@
   .quizMain {
     margin: 70px auto 30px;
     padding: 0 16px;
+    width: 95%; /* Added for mobile */
   }
 
   .quizContainer {
-    padding: 20px;
+    padding: 30px 20px; /* Adjusted for mobile */
   }
 
   .quizQuestion {
@@ -224,6 +227,7 @@
   .quizMain {
     margin: 60px auto 20px;
     padding: 0 12px;
+    width: 100%; /* Full width on very small screens */
   }
 
   .quizContainer {
